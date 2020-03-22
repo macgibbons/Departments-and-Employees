@@ -16,10 +16,44 @@ namespace DepartmentsEmployees.Data
                 return new SqlConnection(_connectionString);
             }
         }
-    /// <summary>
-    ///  Returns a list of all departments in the database
-    /// </summary>
-    public List<Department> GetAllDepartments()
+       
+        /// <summary>
+        ///  Returns a single department with the given id.
+        /// </summary>
+        public Department GetDepartmentById(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT DeptName FROM Department WHERE Id = @id";
+                    cmd.Parameters.Add(new SqlParameter("@id", id));
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    Department department = null;
+
+                    // If we only expect a single row back from the database, we don't need a while loop.
+                    if (reader.Read())
+                    {
+                        department = new Department
+                        {
+                            Id = id,
+                            DeptName = reader.GetString(reader.GetOrdinal("DeptName"))
+                        };
+                    }
+
+                    reader.Close();
+
+                    return department;
+                }
+            }
+        }
+
+        /// <summary>
+        ///  Returns a list of all departments in the database
+        /// </summary>
+        public List<Department> GetAllDepartments()
     {
 
         //  We must "use" the database connection.
