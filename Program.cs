@@ -27,15 +27,32 @@ namespace DepartmentsEmployees
             Department singleDepartment = departmentRepo.GetDepartmentById(1);
             Console.WriteLine($"{singleDepartment.Id}.) {singleDepartment.DeptName}");
 
-            Department legalDept = new Department
+            //Department legalDept = new Department
+            //{
+            //    DeptName = "Legal"
+            //};
+
+            //departmentRepo.AddDepartment(legalDept);
+
+            //Console.WriteLine("-------------------------------");
+            //Console.WriteLine("Added the new Legal Department!");
+
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("which Department (use number)?");
+            foreach (Department dept in allDepartments)
             {
-                DeptName = "Legal"
-            };
+                Console.WriteLine($"{dept.Id}.) {dept.DeptName}");
+            }
+            var updatedDepartmentId = int.Parse(Console.ReadLine());
+            Department departmentToUpdate = departmentRepo.GetDepartmentById(updatedDepartmentId);
+            Console.WriteLine($"Update {departmentToUpdate.DeptName} department Name.");
+            departmentToUpdate.DeptName = Console.ReadLine();
 
-            departmentRepo.AddDepartment(legalDept);
 
-            Console.WriteLine("-------------------------------");
-            Console.WriteLine("Added the new Legal Department!");
+            departmentRepo.UpdateDepartment(updatedDepartmentId, departmentToUpdate);
+
+           
+
         }
     }
 }

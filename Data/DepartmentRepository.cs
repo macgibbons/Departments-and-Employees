@@ -135,5 +135,25 @@ namespace DepartmentsEmployees.Data
 
             // when this method is finished we can look in the database and see the new department.
         }
+        /// <summary>
+        ///  Updates the department with the given id
+        /// </summary>
+        public void UpdateDepartment(int id, Department department)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Department
+                                     SET DeptName = @deptName
+                                     WHERE Id = @id";
+                    cmd.Parameters.Add(new SqlParameter("@deptName", department.DeptName));
+                    cmd.Parameters.Add(new SqlParameter("@id", id));
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
