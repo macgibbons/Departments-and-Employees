@@ -174,6 +174,28 @@ namespace DepartmentsEmployeesConsole.Data
                 }
             }
         }
+        public void AddEmployee(Employee employee)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using(SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        INSERT INTO Employee (FirstName, LastName, DepartmentId)
+                        OUTPUT INSERTED.Id
+                        VALUES (@firstName, @lastName, @departmentId)";
+                    cmd.Parameters.Add(new SqlParameter("@firstName", employee.FirstName));
+                    cmd.Parameters.Add(new SqlParameter("@lastName", employee.LastName));
+                    cmd.Parameters.Add(new SqlParameter("@DepartmentId", employee.DepartmentId));
+                    int id = (int)cmd.ExecuteScalar();
+
+                    employee.Id = id;
+
+                   
+                }
+            }
+        }
         public void DeleteEmployee(int employeeId)
         {
             using (SqlConnection conn = Connection)
