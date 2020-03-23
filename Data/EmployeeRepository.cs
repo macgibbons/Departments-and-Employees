@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DepartmentsEmployeesConsole.Data
+namespace DepartmentsEmployees.Data
 {
     // This class is for retrieving data from our database
     public class EmployeeRepository
@@ -193,6 +193,29 @@ namespace DepartmentsEmployeesConsole.Data
                     employee.Id = id;
 
                    
+                }
+            }
+        }
+
+        public void UpdateEmployee(int id, Employee employee)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText= @"UPDATE Employee
+                                     SET FirstName = @firstName, LastName = @lastName, DepartmentId = @departmentId
+                                     WHERE Id = @id";
+
+                    cmd.Parameters.Add(new SqlParameter("@firstName", employee.FirstName));
+                    cmd.Parameters.Add(new SqlParameter("@lastName", employee.LastName));
+                    cmd.Parameters.Add(new SqlParameter("@departmentId", employee.DepartmentId));
+                    cmd.Parameters.Add(new SqlParameter("@id", id));
+
+                    cmd.ExecuteNonQuery();
+
+
                 }
             }
         }

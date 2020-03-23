@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using DepartmentsEmployees.Data;
 using DepartmentsEmployees.Models;
-using DepartmentsEmployeesConsole.Data;
 
 namespace DepartmentsEmployees
 {
@@ -75,12 +74,23 @@ namespace DepartmentsEmployees
             }
 
             Console.WriteLine("CREATE");
+            Console.WriteLine("What is their First Name?");
+            var newEmployeeFirstName = Console.ReadLine();
+            Console.WriteLine("what is their Last Name?");
+
+            var newEmployeeLastName = Console.ReadLine();
+            Console.WriteLine("Which department do they work in?");
+            foreach (Department dept in allDepartments)
+            {
+                Console.WriteLine($"{dept.Id}.) {dept.DeptName}");
+            }
+            var newEmployeeDepartmentId = int.Parse(Console.ReadLine());
 
             Employee newEmployee = new Employee
             {
-                FirstName = "Mac",
-                LastName = "Gibbons",
-                DepartmentId = 5
+                FirstName = newEmployeeFirstName,
+                LastName = newEmployeeLastName,
+                DepartmentId = newEmployeeDepartmentId
             };
 
             employeeRepo.AddEmployee(newEmployee);
