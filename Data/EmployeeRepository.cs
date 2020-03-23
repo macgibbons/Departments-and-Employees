@@ -100,6 +100,7 @@ namespace DepartmentsEmployeesConsole.Data
         }
 
         public Employee GetEmployeeById(int employeeId)
+
         {
             // This opens the connection. SQLConnection is the TUNNEL
             using (SqlConnection conn = Connection)
@@ -170,6 +171,22 @@ namespace DepartmentsEmployeesConsole.Data
                         // We didn't find the employee with that ID in the database. return null
                         return null;
                     }
+                }
+            }
+        }
+        public void DeleteEmployee(int employeeId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = "DELETE FROM Employee WHERE Id = @id";
+
+                    cmd.Parameters.Add(new SqlParameter("@id", employeeId));
+
+                    cmd.ExecuteNonQuery();
                 }
             }
         }

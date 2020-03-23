@@ -27,17 +27,19 @@ namespace DepartmentsEmployees
             Department singleDepartment = departmentRepo.GetDepartmentById(1);
             Console.WriteLine($"{singleDepartment.Id}.) {singleDepartment.DeptName}");
 
-            //Department legalDept = new Department
-            //{
-            //    DeptName = "Legal"
-            //};
+            Console.WriteLine("CREATE");
+            Department legalDept = new Department
+            {
+                DeptName = "Legal"
+            };
 
-            //departmentRepo.AddDepartment(legalDept);
+            departmentRepo.AddDepartment(legalDept);
 
-            //Console.WriteLine("-------------------------------");
-            //Console.WriteLine("Added the new Legal Department!");
+            Console.WriteLine("-------------------------------");
+            Console.WriteLine("Added the new Legal Department!");
 
             Console.WriteLine("----------------------------");
+            Console.WriteLine("UPDATE");
             Console.WriteLine("which Department (use number)?");
             foreach (Department dept in allDepartments)
             {
@@ -51,7 +53,20 @@ namespace DepartmentsEmployees
 
             departmentRepo.UpdateDepartment(updatedDepartmentId, departmentToUpdate);
 
-           
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("DELETE");
+            Console.WriteLine("which Department (use number)?");
+            foreach (Department dept in allDepartments)
+            {
+                Console.WriteLine($"{dept.Id}.) {dept.DeptName}");
+            }
+            var deleteDepartmentId = int.Parse(Console.ReadLine());
+            Department departmentToDelete = departmentRepo.GetDepartmentById(deleteDepartmentId);
+            Console.WriteLine($"Deleting {departmentToDelete.DeptName}");
+            departmentRepo.DeleteDepartment(deleteDepartmentId);
+
+
+
 
         }
     }
